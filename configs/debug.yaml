@@ -1,0 +1,10 @@
+model_name: paudelanil/trocr-devanagari-2
+paths:
+  data: data
+  output: outputs
+batch_size: 2
+learning_rate: 0.00005
+epochs: 1
+max_samples: 50
+fp16: false
+use_lora: false

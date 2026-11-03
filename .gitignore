@@ -1,0 +1,24 @@
+# data (keep folders via .gitkeep, keep split CSVs)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# training outputs
+outputs/*
+!outputs/.gitkeep
+checkpoints/
+
+# python / notebooks
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+venv/
+
+# model files and archives
+*.pt
+*.pth
+*.safetensors
+*.bin
+*.zip
