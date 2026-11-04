@@ -41,7 +41,7 @@ def main(a):
     print("decoder_start_token_id:", model.config.decoder_start_token_id,
           "| pad:", model.config.pad_token_id, "| eos:", model.config.eos_token_id)
 
-    ds = OCRDataset(f"data/splits/{a.split}.csv", a.root, proc, max_len=32)
+    ds = OCRDataset(f"{a.splits}/{a.split}.csv", a.root, proc, max_len=32)
     loader = DataLoader(ds, batch_size=a.bs, shuffle=False, num_workers=2)
 
     preds = predict(model, loader, proc, device)
@@ -61,6 +61,7 @@ if __name__ == "__main__":
     p.add_argument("--root", required=True)
     p.add_argument("--model", default=MODEL)
     p.add_argument("--split", default="test")
+    p.add_argument("--splits", default="data/splits")
     p.add_argument("--bs", type=int, default=32)
     p.add_argument("--tag", default="baseline")
     main(p.parse_args())

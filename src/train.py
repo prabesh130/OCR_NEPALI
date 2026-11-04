@@ -14,15 +14,15 @@ def main(a):
     proc = load_processor()
     tok = proc.tokenizer
 
-    model = VisionEncoderDecoderModel.from_pretrained(MODEL)
+    model = VisionEncoderDecoderModel.from_pretrained(a.model)
     cfg = model.config
     cfg.decoder_start_token_id = tok.cls_token_id
     cfg.pad_token_id = tok.pad_token_id
     cfg.eos_token_id = tok.sep_token_id
     cfg.vocab_size = cfg.decoder.vocab_size
 
-    train_ds = OCRDataset("data/splits/train.csv", a.root, proc, a.max_len, augment=TrainAugment())
-    val_ds = OCRDataset("data/splits/val.csv", a.root, proc, a.max_len)
+    train_ds = OCRDataset(f"{a.splits}/train.csv", a.root, proc, a.max_len, augment=TrainAugment())
+    val_ds = OCRDataset(f"{a.splits}/val.csv", a.root, proc, a.max_len)
     if a.max_samples:
         train_ds.df = train_ds.df.head(a.max_samples)
         val_ds.df = val_ds.df.head(max(8, a.max_samples // 4))
@@ -85,6 +85,8 @@ def main(a):
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--root", required=True)
+    p.add_argument("--model", default=MODEL)
+    p.add_argument("--splits", default="data/splits")
     p.add_argument("--out", default="outputs/run1")
     p.add_argument("--bs", type=int, default=16)
     p.add_argument("--accum", type=int, default=2)
